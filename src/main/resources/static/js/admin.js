@@ -6,7 +6,7 @@
 
       document.querySelectorAll('.toolbar button').forEach(btn => btn.classList.remove('active'));
       const buttons = [...document.querySelectorAll('.toolbar button')];
-      const map = { servicesTab: 0, customersTab: 1, bookingsTab: 2 };
+      const map = { servicesTab: 0, customersTab: 1, bookingsTab: 2, partsTab: 3 };
       buttons[map[id]].classList.add('active');
     }
 
@@ -73,6 +73,28 @@
       }
     }
 
+    async function loadParts() {
+      const tbody = document.getElementById('partTable');
+      tbody.innerHTML = '<tr><td colspan="5">Loading...</td></tr>';
+      try {
+        const data = await fetchJson(`${API}/api/parts`);
+        tbody.innerHTML = data.length
+          ? data.map(p => `
+            <tr>
+              <td>${p.id}</td>
+              <td>${p.name}</td>
+              <td>${p.price}</td>
+              <td>${p.stock}</td>
+              <td>${p.description}</td>
+            </tr>
+          `).join('')
+          : '<tr><td colspan="5">No parts yet</td></tr>';
+      } catch (err) {
+        tbody.innerHTML = '<tr><td colspan="5">Error loading parts</td></tr>';
+        setStatus('partStatus', err.message, true);
+      }
+    }
+
     document.getElementById('serviceForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       setStatus('serviceStatus', 'Saving...');
@@ -92,6 +114,30 @@
       }
     });
 
+    document.getElementById('partForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  setStatus('partStatus', 'Saving...');
+
+  try {
+    await fetchJson(`${API}/api/parts`, {
+      method: 'POST',
+      body: JSON.stringify({
+        name: document.getElementById('partName').value,
+        price: parseFloat(document.getElementById('partPrice').value),
+        stock: parseInt(document.getElementById('partStock').value),
+        description: document.getElementById('partDescription').value
+      })
+      });
+
+        e.target.reset();
+        setStatus('partStatus', 'Saved successfully');
+        await loadParts();
+      } catch (err) {
+        setStatus('partStatus', 'Error: ' + err.message, true);
+      }
+    });
+
     loadServices();
     loadCustomers();
     loadBookings();
+    loadParts();

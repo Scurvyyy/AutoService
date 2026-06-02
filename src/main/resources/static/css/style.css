@@ -274,8 +274,12 @@ h1 {
   z-index: 9999;
 }
 .market-header {
+  width: 100%;
   background: #ffffff;
   border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .market-topbar {
@@ -344,8 +348,8 @@ h1 {
 }
 
 .hero-text h1 {
-  font-size: clamp(42px, 7vw, 72px);
-  line-height: 0.95;
+  font-size: clamp(42px, 7vw, 62px);
+  line-height: 0.85;
   margin: 18px 0;
 }
 
@@ -420,10 +424,14 @@ h1 {
     grid-template-columns: 1fr;
   }
 
-  .market-topbar {
-    flex-direction: column;
-    gap: 16px;
-  }
+.market-topbar {
+  width: min(1400px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 16px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 }
 
 .toast.show {

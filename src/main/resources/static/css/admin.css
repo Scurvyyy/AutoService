@@ -165,3 +165,7 @@ tbody tr:hover {
   font-size: 12px;
   font-weight: 700;
 }
+
+.section-tab form {
+  margin-bottom: 16px;
+}
