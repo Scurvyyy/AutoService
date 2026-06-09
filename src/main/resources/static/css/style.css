@@ -51,7 +51,7 @@ a {
   min-height: 100vh;
   display: grid;
   place-items: center;
-  padding: 100px 24px;
+  padding: 80px 24px;
 }
 
 .hero-content {
@@ -109,10 +109,7 @@ h1 {
   color: #052e16;
 }
 
-.btn-secondary {
-  border: 1px solid var(--border);
-  background: rgba(209, 215, 228, 0.9);
-}
+
 
 .car-card {
   height: 260px;
@@ -277,12 +274,16 @@ h1 {
   width: 100%;
   background: #ffffff;
   border-bottom: 1px solid #e5e7eb;
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 100;
 }
 
 .market-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
   max-width: 1400px;
   margin: 0 auto;
   padding: 16px 24px;

@@ -13,14 +13,16 @@ public class Customer {
     private String name;
     private String phone;
     private String email;
+    private String password;
 
     public Customer() {
     }
 
-    public Customer(String name, String phone, String email) {
+    public Customer(String name, String phone, String email, String password) {
         this.name = name;
         this.phone = phone;
         this.email = email;
+        this.password = password;
     }
 
     public Long getId() {
@@ -38,6 +40,11 @@ public class Customer {
     public String getEmail() {
         return email;
     }
+    
+    public String getPassword() {
+        return password;
+    }
+    
 
     public void setId(Long id) {
         this.id = id;
@@ -53,5 +60,9 @@ public class Customer {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

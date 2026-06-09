@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account</title>
+  <link rel="stylesheet" href="css/signup.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link
+  href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+  rel="stylesheet"
+  />
+</head>
+<body>
+
+<div class="auth-page">
+
+  <div class="auth-card">
+
+    <div class="auth-logo">
+      <span class="brand-mark">OD</span>
+      <h1>Auto Service</h1>
+    </div>
+
+    <h2>Бүртгүүлэх</h2>
+
+
+    <form id="signupForm">
+
+
+      <input
+        type="tel"
+        id="phone"
+        placeholder="Утасны дугаар оруулна уу"
+        required
+      >
+      <div class="password-container">
+        <input type="password" id="password" placeholder="Password">
+        <i class="ri-eye-off-fill" id="togglePassword"></i>
+      </div>
+
+      <div class="password-container">
+        <input type="password" id="confirmPassword" placeholder="Confirm Password">
+        <i class="ri-eye-off-fill" id="toggleConfirmPassword"></i>
+      </div>
+
+      <button type="submit">
+      Бүртгүүлэх
+      </button>
+
+      <div class="checkbox-group">
+        <div class="remember-me">
+          <input type="checkbox" id="remember-me-checkbox" class="checkbox-field">
+          <label for="remember-me-checkbox">Сануулах</label>
+        </div>
+
+        <div class="forget-pass">
+          <a href="#" class="forget-link">Forgot password?</a>
+        </div>
+      </div>
+
+
+    </form>
+
+    <div class="signup-row">
+      Хэдийнээ бүртгэлтэй юу?
+      <a href="login.html">Нэвтрэх</a>
+    </div>
+
+  </div>
+
+</div>
+  <script src="js/login.js"></script>
+
+</body>
+</html>

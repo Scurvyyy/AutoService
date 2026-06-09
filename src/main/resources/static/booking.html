@@ -11,33 +11,32 @@
     <div class="booking-card">
       <div class="booking-title">
         <h1>Book Your Service</h1>
-        <p>Choose your service, add your details, and send the booking instantly.</p>
       </div>
 
       <div class="top-links">
-        <a class="link-btn" href="index.html">Back to home</a>
+        <a class="link-btn" href="index.html">Нүүр хуудасруу буцах</a>
         <!-- <a class="link-btn" href="admin.html">Admin Login</a> -->
       </div>
  
 
       <form id="bookingForm">
-        <input id="customerName" class="field" type="text" placeholder="Your name" required />
-        <input id="customerPhone" class="field" type="tel" placeholder="Your phone number" required />
+        <input id="customerName" class="field" type="text" placeholder="Таны нэр" required />
+        <input id="customerPhone" class="field" type="tel" placeholder="Таны утасны дугаар" required />
 
         <div class="row">
           <select id="serviceName" class="field" required>
-            <option value="">Select service</option>
-            <option>Oil Change</option>
-            <option>Tire Service</option>
-            <option>General Repair</option>
-            <option>Parts & Maintenance</option>
+            <option value="">Үйлчилгээ сонгох</option>
+            <option>Тос солиулах</option>
+            <option>Оношилгоо</option>
+            <option>Мотор үзүүлэх</option>
+            <option>Явах эд анги</option>
           </select>
           <input id="bookingDate" class="field" type="date" required />
         </div>
 
-        <textarea id="problemDescription" class="field" rows="4" placeholder="Description or note"></textarea>
+        <textarea id="problemDescription" class="field" rows="4" placeholder="Нэмэлт хүсэлт , мэдээлэл"></textarea>
 
-        <button class="primary-btn" type="submit">Submit Booking</button>
+        <button class="primary-btn" type="submit">Захиалга баталгаажуулах</button>
       </form>
 
       <div class="status" id="bookingStatus"></div>

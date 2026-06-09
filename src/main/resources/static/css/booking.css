@@ -6,32 +6,20 @@
     }
 
     .page-shell {
-      width: min(860px, 100%);
+      width: min(1000px, 100%);
     }
 
     .booking-card {
-      background: rgba(36, 66, 40, 0.88);
+      background: rgba(221, 219, 76, 0.88);
       border: 1px solid rgba(148, 163, 184, 0.18);
-      border-radius: 24px;
-      padding: 24px;
+      border-radius: 30px;
+      padding: 30px;
       box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
       backdrop-filter: blur(12px);
     }
 
     .booking-title {
       margin-bottom: 20px;
-    }
-
-    .booking-title h1 {
-      margin: 0 0 8px;
-      font-size: 34px;
-      line-height: 1;
-    }
-
-    .booking-title p {
-      margin: 0;
-      color: #94a3b8;
-      line-height: 1.6;
     }
 
     .top-links {
@@ -45,7 +33,7 @@
       display: inline-block;
       padding: 10px 14px;
       border-radius: 12px;
-      background: #1f2937;
+      background: #1c1917;
       color: #e5e7eb;
       border: 1px solid rgba(148, 163, 184, 0.18);
       font-weight: 700;
@@ -53,8 +41,8 @@
     }
 
     .link-btn.primary {
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      color: #052e16;
+      background: linear-gradient(135deg, #e35836, #22bed3);
+      color: #df533d;
       border: none;
     }
 
@@ -65,7 +53,7 @@
 
     .field {
       width: 100%;
-      padding: 12px 14px;
+      padding: 12px ;
       border-radius: 12px;
       border: 1px solid rgba(173, 190, 214, 0.18);
       background: #0b1220;
@@ -94,55 +82,27 @@
       color: #052e16; 
       cursor: pointer;
     }
+    .primary-btn:hover{
+      font-family: monospace;
+      color: white;
+      background-color: orange;
+    }
 
     .small {
       margin-top: 12px;
       font-size: 13px;
       line-height: 1.6;
-      color: #94a3b8;
+      color: #e62316;
     }
 
     .badge {
       display: inline-block;
       padding: 4px 10px;
       border-radius: 999px;
-      background: #1e293b;
+      background: #0766ff;
       color: #cbd5e1;
       font-size: 12px;
       margin: 2px 4px 2px 0;
-    }
-
-    .status {
-      min-height: 18px;
-      margin-top: 8px;
-      color: #94a3b8;
-      font-size: 13px;
-    }
-
-    .status.error {
-      color: #ef4444;
-    }
-
-    .service-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px;
-      margin: 16px 0 20px;
-    }
-
-    .service-pill {
-      padding: 14px;
-      border-radius: 16px;
-      background: rgba(17, 24, 39, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.18);
-      color: #e5e7eb;
-    }
-
-    .service-pill span {
-      display: block;
-      margin-top: 6px;
-      color: #94a3b8;
-      font-size: 13px;
     }
 
     @media (max-width: 640px) {
