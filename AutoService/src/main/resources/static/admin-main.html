@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin dashboard </title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+        <div class="container">
+
+            <div class="header">
+                <h1>Admin Dashboard</h1>
+                <p>Auto Service Management System</p>
+            </div>
+
+
+        </div>
+
+        <div class="sidebar">
+            <button onclick="showSection('dashboard')">Dashboard </button>
+            <button onclick="showSection('orders')">Orders</button>
+            <button onclick="showSection('inventory')">Inventory</button>
+            <button onclick="showSection('history')">History</button>
+        </div>
+
+
+
+<div class="content">
+
+    <section id="dashboard" class="section">
+
+        <h1>Dashboard</h1>
+
+        <div class="stats">
+
+            <div class="card">
+                <h3 id="totalOrders">0</h3>
+                <p>Total Orders</p>
+            </div>
+
+            <div class="card">
+                <h3 id="pendingOrders">0</h3>
+                <p>Pending Orders</p>
+            </div>
+
+            <div class="card">
+                <h3 id="completedOrders">0</h3>
+                <p>Completed Orders</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="orders" class="section">
+
+        <h1>Orders</h1>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Service</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody id="ordersTable">
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+    <section id="inventory" class="section">
+
+        <h1>Inventory</h1>
+
+        <button>Add Part</button>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Part</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody id="inventoryTable">
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+    <section id="history" class="section">
+
+        <h1>History</h1>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Service</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+
+            <tbody id="historyTable">
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+</div>
+
+
+<script src="js/admin.js"></script>
+</body>
+</html>

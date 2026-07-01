@@ -1,0 +1,39 @@
+.signup-row {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 15px;
+
+}
+
+.signup-row a {
+  color: #2563eb;
+  font-weight: 700;
+  text-decoration: none;
+  margin-left: 5px;
+}
+
+.signup-row a:hover{
+  text-decoration: underline;
+}
+
+.divider {
+  margin: 28px 0;
+  text-align: center;
+  color: #9ca3af;
+}
+
+.staff-row {
+  text-align: center;
+}
+
+.staff-row a {
+  color: #111827;
+  font-weight: 700;
+}
+
+.checkbox-group {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+

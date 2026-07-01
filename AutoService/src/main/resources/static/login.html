@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>login</title>
+  <link rel="stylesheet" href="css/login.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link
+  href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+  rel="stylesheet"
+  />
+</head>
+
+<body>
+  <div class="auth-page">
+
+    <div class="auth-card">
+
+      <div class="auth-logo">
+        <span class="brand-mark">A</span>
+        <h1>Auto Service</h1>
+      </div>
+
+      <h2>Welcome</h2>
+
+
+      <form id="loginForm">
+
+        <input
+          type="tel"
+          id="phone"
+          placeholder="Утасны дугаар оруулна уу"
+          required
+        >
+
+        <div class="password-container">
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            required
+          >
+
+          <i class="ri-eye-off-fill" id="togglePassword"></i>
+        </div>
+        
+
+        <button type="submit">
+          Нэвтрэх
+        </button>
+
+      </form>
+
+      <div class="signup-row">
+      Бүртгэл үүсгэх үү ?
+        <a href="signup.html">Бүртгүүлэх</a>
+      </div>
+
+      <div class="divider">
+        <span>Staff Access</span>
+      </div>
+
+      <div class="staff-row">
+        <a href="admin-login.html">
+          Admin & Cashier Login
+        </a>
+      </div>
+
+      <div class="get-back">
+        <a href="index.html">
+          Get back
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+  <script src="js/login.js"></script>
+</body>
+</html>

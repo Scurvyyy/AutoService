@@ -1,0 +1,146 @@
+﻿.verify-container{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#f5f7fa,#e9eef5);
+    padding:20px;
+}
+
+.verify-card{
+
+    width:100%;
+    max-width:480px;
+    background:#fff;
+    border-radius:18px;
+    padding:40px;
+    text-align:center;
+    box-shadow: 0 15px 35px rgba(0,0,0,.08);
+}
+
+.verify-card h1{
+    font-size:32px;
+    margin-bottom:15px;
+    color:#222;
+}
+
+.verify-text{
+    color:#666;
+    line-height:1.6;
+    margin-bottom:30px;
+}
+
+.verify-text strong{
+    color:#0d6efd;
+}
+
+.verify-code{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    margin:30px 0;
+}
+
+.code-input{
+
+    width:58px;
+    height:65px;
+    border:2px solid #dcdcdc;
+    border-radius:12px;
+    font-size:30px;
+    font-weight:bold;
+    text-align:center;
+    outline:none;
+    transition:.25s;
+    background:#fafafa;
+}
+
+.code-input:hover{
+    border-color:#0d6efd;
+}
+
+.code-input:focus{
+    background:white;
+    border-color:#0d6efd;
+    transform:translateY(-3px);
+    box-shadow: 0 6px 18px rgba(13,110,253,.25);
+}
+
+.code-input.error{
+
+    border-color:#dc3545;
+    color:#dc3545;
+    animation:shake .35s;
+}
+
+.code-input.success{
+    border-color:#198754;
+    color:#198754;
+    background:#f0fff4;
+}
+
+.verify-button{
+    width:100%;
+    padding:14px;
+    margin-top:10px;
+    border:none;
+    border-radius:10px;
+    background:#0d6efd;
+    color:white;
+    font-size:17px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.verify-button:hover{
+    background:#0b5ed7;
+    transform:translateY(-2px);
+}
+
+.verify-button:disabled{
+    background:#8ab4f8;
+    cursor:not-allowed;
+    transform:none;
+}
+
+.verify-message{
+    margin-top:20px;
+    min-height:24px;
+    font-weight:600;
+}
+
+.timer{
+    margin-top:18px;
+    color:#666;
+    font-size:15px;
+}
+
+.resend-btn{
+    margin-top:8px;
+    background:none;
+    border:none;
+    color:#0d6efd;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.resend-btn:hover{
+    color:#084298;
+}
+
+.resend-btn:disabled{
+    color:#999;
+    cursor:not-allowed;
+}
+
+@keyframes shake{
+
+    0%{transform:translateX(0);}
+    20%{transform:translateX(-6px);}
+    40%{transform:translateX(6px);}
+    60%{transform:translateX(-4px);}
+    80%{transform:translateX(4px);}
+    100%{transform:translateX(0);}
+}

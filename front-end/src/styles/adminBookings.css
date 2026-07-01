@@ -1,0 +1,65 @@
+﻿.admin-bookings {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+th,
+td {
+    padding: 15px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+}
+
+th {
+    background: #2563eb;
+    color: white;
+}
+
+button {
+
+    background: #10b981;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.pending {
+    color: orange;
+    font-weight: bold;
+}
+
+.completed {
+    color: green;
+    font-weight: bold;
+}
+
+.cancelled {
+    color: red;
+    font-weight: bold;
+}
+
+.assigned {
+    color: blue;
+    font-weight: bold;
+}
+
+.getback {
+    padding: 10px;
+
+}
+
+.search-btn {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
