@@ -1,0 +1,46 @@
+﻿.login-row {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.login-row a {
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.password-rules {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: -8px;
+}
+
+.checkbox-group{
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.signup-row {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 15px;
+
+}
+
+.signup-row a {
+  color: #2563eb;
+  font-weight: 700;
+  text-decoration: none;
+  margin-left: 5px;
+}
+
+.signup-row a:hover{
+  text-decoration: underline;
+}
