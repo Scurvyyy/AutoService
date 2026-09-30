@@ -1,15 +1,14 @@
-﻿    function ProtectedRoute({ children }) {
+﻿import { Navigate } from "react-router-dom";
 
-    const customer = localStorage.getItem("customer");
+function AdminRoute({ children }) {
 
-    if (!customer) {
+    const admin = localStorage.getItem("admin");
 
-        return <Navigate to="/login" replace />;
-    }
-
-    if (!customer && customer) {
-
+    if (!admin) {
         return <Navigate to="/adminLogin" replace />;
     }
 
     return children;
+}
+
+export default AdminRoute;

@@ -30,7 +30,7 @@ public class AdminController {
     ) {
 
         Admin admin = repository
-                .findByUsername(request.getUsername())
+                .findByUserName(request.getUsername())
                 .orElse(null);
 
         if (admin == null) {

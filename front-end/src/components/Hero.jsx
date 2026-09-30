@@ -17,7 +17,7 @@ function Hero() {
                 Найдвартай автомашины засвар үйлчилгээ,
                 онлайн цаг захиалга болон чанартай сэлбэгийн үйлчилгээ.
             </p>
-            <button onClick={() => navigate = ("/Booking")}>
+            <button onClick={() => navigate("/bookings")}>
                 Захиалга өгөх
             </button>
 

@@ -3,27 +3,29 @@
     padding: 120px 20px;
     background: linear-gradient(
         135deg,
-        #2563eb,
-        #1d4ed8
+        #f5bba4,
+        #b2e457
     );
     
     color: white;
 }
 
 .hero h1 {
+    color: black;
     font-size: 60px;
     margin-bottom: 20px;
 }
 
 .hero p {
+    color: black;
     font-size: 22px;
     max-width: 700px;
     margin: 0 auto 30px;
 }
 
 .hero button {
-    background: white;
-    color: #2563eb;
+    background: green;
+    color: white;
     border: none;
     padding: 15px 30px;
     border-radius: 10px;

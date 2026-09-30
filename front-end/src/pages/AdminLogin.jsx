@@ -5,12 +5,13 @@ import "../styles/adminLogin.css";
 
 function AdminLogin() {
 
-    const [phone, setPhone] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
  
     const isFormValid =
-    phone.trim() !== "" &&
+    username.trim() !== "" &&
     password.trim() != "" ;
 
     const handleLogin = async () => {
@@ -23,14 +24,14 @@ function AdminLogin() {
         }
 
         const response = await fetch(
-            "http://localhost:8080/api/customers/adminLogin",
+            "http://localhost:8080/api/admin/login",
             {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    phone: phone,
+                    username: username,
                     password: password
                 })
             }
@@ -78,13 +79,13 @@ function AdminLogin() {
                 <h1>Нэвтрэх</h1>
                 <div className="admin-group">
                 <label>
-                    Утасны дугаар
+                    Нэвтрэх нэр
                 </label>
                 <input
                     type="text"
-                    value={phone}
-                    placeholder="утасны дугаар"
-                    onChange={(e) => setPhone(e.target.value)}
+                    value={username}
+                    placeholder="Нэвтрэх нэр"
+                    onChange={(e) => setUsername(e.target.value)}
                 />
 
                 </div>
@@ -131,4 +132,4 @@ function AdminLogin() {
     );
 }
 
-export default adminLogin;
+export default AdminLogin;

@@ -15,7 +15,8 @@ import AdminMechanics from "./pages/AdminMechanic";
 import Verify from "./pages/Verify";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectRoute";
-import adminLogin from "./pages/AdminLogin";
+import AdminLogin from "./pages/AdminLogin";
+import AdminRoute from "./components/AdminRoute";
 
 
 
@@ -40,16 +41,15 @@ function App() {
 
         <Route path="/register" element={<Register/>} />
 
-        <Route path="/admin" element={<AdminRoute><Admin/></AdminRoute>} />
+        <Route path="/Admin" element={<AdminRoute><Admin/></AdminRoute>} />
 
-        <Route path="/admin" element={<AdminRoute><Admin/></AdminRoute>} />
+        <Route path="/adminLogin" element={<AdminLogin/>} />
 
-        
-        <Route path="/admin/adminBookings" element={<ProtectedRoute><AdminBookings/></ProtectedRoute>} />
+        <Route path="/admin/adminBookings" element={<AdminRoute><AdminBookings/></AdminRoute>} />
 
-        <Route path="/admin/parts" element={<ProtectedRoute><AdminParts/></ProtectedRoute>} />
+        <Route path="/admin/parts" element={<AdminRoute><AdminParts/></AdminRoute>} />
 
-        <Route path="/admin/mechanic" element={<ProtectedRoute><AdminMechanics/></ProtectedRoute>} /> 
+        <Route path="/admin/mechanic" element={<AdminRoute><AdminMechanics/></AdminRoute>} /> 
 
         <Route path="/verify" element={<ProtectedRoute><Verify/></ProtectedRoute>} /> 
 
