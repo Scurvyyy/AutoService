@@ -17,7 +17,7 @@ import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectRoute";
 import AdminLogin from "./pages/AdminLogin";
 import AdminRoute from "./components/AdminRoute";
-
+import AdminReports from "./pages/AdminReports";
 
 
 function App() {
@@ -50,6 +50,8 @@ function App() {
         <Route path="/admin/parts" element={<AdminRoute><AdminParts/></AdminRoute>} />
 
         <Route path="/admin/mechanic" element={<AdminRoute><AdminMechanics/></AdminRoute>} /> 
+        
+        <Route path="/admin/reports" element={<AdminRoute><AdminReports/></AdminRoute>} />
 
         <Route path="/verify" element={<ProtectedRoute><Verify/></ProtectedRoute>} /> 
 

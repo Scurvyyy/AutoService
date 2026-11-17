@@ -50,14 +50,8 @@ function AdminLogin() {
         }
 
             const data = JSON.parse(text);
-
-            localStorage.setItem(
-                "admin",
-                JSON.stringify(data)
-            );
-
-            navigate("/admin");
-
+            sessionStorage.setItem("admin", JSON.stringify(data));
+            navigate("/admin", { replace: true });
             console.log("Login success");
         
     };

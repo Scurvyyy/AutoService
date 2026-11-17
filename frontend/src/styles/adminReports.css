@@ -1,0 +1,156 @@
+.reports-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 45px 30px;
+}
+
+.reports-container > h1 {
+    font-size: 30px;
+    color: #111827;
+    margin: 0 0 8px;
+}
+
+.reports-container > p {
+    color: #64748b;
+    margin: 0 0 35px;
+}
+
+.reports-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .reports-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.report-card {
+    background: white;
+    padding: 25px;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    border-top: 4px solid #dc2626;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+}
+
+.report-card h3 {
+    font-size: 15px;
+    color: #64748b;
+    margin: 0 0 15px;
+}
+
+.report-card h1 {
+    font-size: 36px;
+    color: #111827;
+    margin: 0;
+}
+
+.reports-chart {
+    background: white;
+    margin-top: 30px;
+    padding: 30px;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+}
+
+.reports-chart h2 {
+    font-size: 20px;
+    color: #111827;
+    margin: 0 0 25px;
+}
+
+@media (max-width: 768px) {
+    .reports-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .reports-container {
+        padding: 30px 18px;
+    }
+}
+
+.reports-actions {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 35px;
+    padding-bottom: 30px;
+}
+
+.reports-actions .back-btn {
+    position: static;
+    margin: 0;
+    padding: 12px 24px;
+    background: #dc2626;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.reports-actions .back-btn:hover {
+    background: #b91c1c;
+}
+
+.reports-chart + .reports-chart {
+    margin-top: 25px;
+}
+
+.reports-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.export-btn {
+    padding: 12px 24px;
+    background: #374151;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.export-btn:hover {
+    background: #1f2937;
+}
+
+.print-btn {
+    padding: 12px 24px;
+    background: #dc2626;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.print-btn:hover {
+    background: #b91c1c;
+}
+
+@media print {
+    nav,
+    .reports-actions,
+    .reports-filter {
+        display: none !important;
+    }
+
+    .reports-container {
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .reports-chart,
+    .report-card {
+        box-shadow: none;
+        break-inside: avoid;
+    }
+
+    body {
+        background: white;
+    }
+}

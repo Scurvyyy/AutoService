@@ -1,27 +1,68 @@
-﻿.admin-container {
-    max-width: 1200px;
-    margin: 50px auto;
-    padding: 20px;
+﻿.dashboard-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 50px 30px;
+    min-height: calc(100vh - 80px);
+    box-sizing: border-box;
+    display: block;
+}
+
+.dashboard-container > h1 {
+    font-size: 32px;
+    color: #1f2937;
+    margin: 0 0 35px;
+    text-align: left;
 }
 
 .admin-grid {
     display: grid;
-    grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 25px;
-    margin-top: 30px;
 }
 
-.admin-card {
-
+.admin-grid .admin-card {
     background: white;
     padding: 30px;
-    border-radius: 15px;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    border-left: 4px solid #dc2626;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     cursor: pointer;
-    box-shadow:0 5px 20px rgba(0,0,0,0.08);
-    transition: 0.3s; 
+    transition: 0.3s;
 }
 
-.admin-card:hover {
+.admin-grid .admin-card:hover {
     transform: translateY(-5px);
+    border-color: #dc2626;
+    box-shadow: 0 8px 25px rgba(220,38,38,0.12);
 }
 
+.admin-grid .admin-card h2 {
+    font-size: 17px;
+    color: #6b7280;
+    margin: 0 0 15px;
+}
+
+.admin-grid .admin-card h1 {
+    font-size: 38px;
+    color: #dc2626;
+    margin: 0 0 12px;
+}
+
+.admin-grid .admin-card p {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0;
+}
+
+@media (max-width: 1000px) {
+    .admin-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+}

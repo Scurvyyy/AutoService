@@ -68,7 +68,7 @@ function Admin() {
         <div>
 
             <Navbar />
-            <div className="admin-container">
+            <div className="dashboard-container">
 
                 <h1>
                     Admin Dashboard
@@ -106,6 +106,14 @@ function Admin() {
                         <h2>Засварчин</h2>
                         <h1>{mechanicCount}</h1>
                         
+                    </div>
+
+                    <div
+                        className="admin-card"
+                        onClick={() => navigate("/admin/reports")}
+                    >
+                        <h2>Reports & Analytics</h2>
+                        <p>Тайлан, статистик харах</p>
                     </div>
                 </div>
 

@@ -1,5 +1,6 @@
 ﻿import { useState } from "react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function AdminParts() {
 
@@ -9,6 +10,10 @@ function AdminParts() {
     const [category, setCategory] = useState("");
     const [description, setDescription] = useState("");
     const [parts, setParts] = useState([]);
+    const [image, setImage] = useState(null);
+    const [editingId, setEditingId] = useState(null);
+    const [existingImage, setExistingImage] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -19,37 +24,158 @@ function AdminParts() {
     }, []);
 
     const handleSave = async () => {
+            if (!name.trim() || price === "" || stock === "") {
+            alert("Нэр, үнэ болон үлдэгдлийг заавал бөглөнө үү!");
+            return;
+        }
 
-        const response = await fetch(
-            "http://localhost:8080/api/parts",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type":
-                        "application/json"
-                },
-                body: JSON.stringify({
-                    name,
-                    price,
-                    stock,
-                    category,
-                    description
-                })
+        if (!Number.isFinite(Number(price)) || Number(price) <= 0 ||
+            !Number.isInteger(Number(stock)) || Number(stock) < 0
+        ) {
+            alert("Үнэ 0-ээс их, үлдэгдэл 0 эсвэл эерэг бүхэл тоо байх ёстой!");
+            return;
+        }
+        try {
+            let imageUrl = editingId ? existingImage : "";
+
+            if (image) {
+                const formData = new FormData();
+                formData.append("file", image);
+
+                const uploadResponse = await fetch(
+                    "http://localhost:8080/api/parts/upload",
+                    {
+                        method: "POST",
+                        body: formData
+                    }
+                );
+
+                if (!uploadResponse.ok) {
+                    throw new Error("Image upload failed");
+                }
+
+                imageUrl = await uploadResponse.text();
             }
+
+            const response = await fetch(
+                editingId
+                    ? `http://localhost:8080/api/parts/${editingId}`
+                    : "http://localhost:8080/api/parts",
+                {
+                    method: editingId ? "PUT" : "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name,
+                        price: Number(price),
+                        stock: Number(stock),
+                        category,
+                        description,
+                        image: imageUrl
+                    })
+                }
+                
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to save part");
+            }
+
+            const data = await response.json();
+            setParts(prev =>
+            editingId ? prev.map(part => part.id === editingId ? data : part) : [...prev, data]
+                
         );
 
-        const data = await response.json();
-        setParts((prev) => [...prev, data]);
+            alert("Сэлбэг амжилттай нэмэгдлээ");
 
-        console.log(data);
+            setName("");
+            setPrice("");
+            setStock("");
+            setCategory("");
+            setDescription("");
+            setImage(null);
+            setEditingId(null);
+            setExistingImage("");
 
-        alert("Сэлбэг амжилттай нэмэгдлээ");
+        } catch (error) {
+            console.error(error);
+            alert("Сэлбэг нэмэхэд алдаа гарлаа");
+        }
+    };
 
-        setName("");
-        setPrice("");
-        setStock("");
-        setCategory("");
-        setDescription("");
+    // DELETE ITEM ,PART
+        const handleDelete = async (id) => {
+        if (!window.confirm("Энэ сэлбэгийг устгах уу?")) return;
+
+        const response = await fetch(
+            `http://localhost:8080/api/parts/${id}`,
+            { method: "DELETE" }
+        );
+
+        if (!response.ok) {
+            alert("Сэлбэг устгахад алдаа гарлаа");
+            return;
+        }
+
+        setParts(prev => prev.filter(part => part.id !== id));
+        
+    };
+
+        const handleEdit = (part) => {
+        setEditingId(part.id);
+        setName(part.name ?? "");
+        setPrice(part.price ?? "");
+        setStock(part.stock ?? "");
+        setCategory(part.category ?? "");
+        setDescription(part.description ?? "");
+        setExistingImage(part.image ?? "");
+        setImage(null);
+    };
+
+        const handleSale = async (part) => {
+        const input = prompt(`${part.name} — Борлуулах тоо ширхэг:`);
+
+        if (input === null) return;
+
+        const quantity = Number(input);
+
+        if (!Number.isInteger(quantity) || quantity <= 0) {
+            alert("Зөв тоо оруулна уу");
+            return;
+        }
+
+        if (quantity > part.stock) {
+            alert("Үлдэгдэл хүрэлцэхгүй байна");
+            return;
+        }
+
+        try {
+            const response = await fetch("http://localhost:8080/api/part-sales", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    partId: part.id,
+                    quantity
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error("Sale failed");
+            }
+
+            setParts(prev =>
+                prev.map(item =>
+                    item.id === part.id ? { ...item, stock: item.stock - quantity } : item
+                )
+            );
+
+            alert("Борлуулалт амжилттай бүртгэгдлээ");
+        } catch (error) {
+            console.error(error);
+            alert("Борлуулалт бүртгэхэд алдаа гарлаа");
+        }
     };
 
     return (
@@ -64,9 +190,8 @@ function AdminParts() {
                 type="text"
                 placeholder="Нэр"
                 value={name}
-                onChange={(e) =>
-                    setName(e.target.value)
-                }
+                required
+                onChange={(e) => setName(e.target.value)}
             />
 
             <br /><br />
@@ -75,20 +200,22 @@ function AdminParts() {
                 type="number"
                 placeholder="Үнэ"
                 value={price}
-                onChange={(e) =>
-                    setPrice(e.target.value)
-                }
+                min="0.01"
+                step="0.01"
+                required
+                onChange={(e) => setPrice(e.target.value)}
             />
 
             <br /><br />
 
-            <input
+           <input
                 type="number"
                 placeholder="Үлдэгдэл"
                 value={stock}
-                onChange={(e) =>
-                    setStock(e.target.value)
-                }
+                min="0"
+                step="1"
+                required
+                onChange={(e) => setStock(e.target.value)}
             />
 
             <br /><br />
@@ -123,27 +250,27 @@ function AdminParts() {
 
             <br /><br />
 
-            <textarea
-                placeholder="Тайлбар"
+            <textarea placeholder="Тайлбар"
                 value={description}
                 onChange={(e) =>
-                    setDescription(
-                        e.target.value
-                    )
+                    setDescription(e.target.value)
                 }
             />
 
             <br /><br />
 
-            <button
-                onClick={handleSave}
-            >
-                Хадгалах
+            <input type="file"
+                accept="image/png,image/jpeg,image/webp"
+                onChange={(e) => setImage(e.target.files[0] || null)}
+            />
+
+            <button onClick={handleSave}>
+                {editingId ? "Шинэчлэх" : "Хадгалах"}
             </button>
 
-                        <h2>
-                Нэмэгдсэн сэлбэгүүд
-            </h2>
+                <h2>
+                    Нэмэгдсэн сэлбэгүүд
+                </h2>
 
             <table>
                 <thead>
@@ -153,6 +280,7 @@ function AdminParts() {
                         <th>Үнэ</th>
                         <th>Үлдэгдэл</th>
                         <th>Ангилал</th>
+                        <th>Үйлдэл</th>
                     </tr>
                 </thead>
 
@@ -164,6 +292,10 @@ function AdminParts() {
                             <td>{part.price}₮</td>
                             <td>{part.stock}</td>
                             <td>{part.category}</td>
+                            <td><button onClick={() => handleEdit(part)}>Засах</button>
+                            <button onClick={() => handleDelete(part.id)}>Устгах</button>
+                            <button onClick={() => handleSale(part)}>Борлуулах</button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

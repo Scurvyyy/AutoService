@@ -25,7 +25,7 @@ function WhyChooseUsSection() {
                 <div className="why-card">
                     <h3>Ил тод үнэ</h3>
                     <p>
-                        Урьдчилан тодорхой үнэ.
+                        Урьдчилан тодорхойлсон үнэ.
                     </p>
                 </div>
 
