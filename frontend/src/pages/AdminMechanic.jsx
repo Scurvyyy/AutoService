@@ -31,6 +31,7 @@ function AdminMechanics() {
                 "http://localhost:8080/api/mechanics",
                 {
                     method: "POST",
+                    credentials: "include",
                     headers: {
                         "Content-Type": "application/json"
                     },

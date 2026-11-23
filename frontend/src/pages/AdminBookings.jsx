@@ -11,24 +11,31 @@ function AdminBookings() {
     const [search, setSearch] = useState("");
     const [statusFilter, setStatusFilter] = useState("All");
 
+        
     const handleComplete = async (id) => {
+        try {
+            const response = await fetch(
+                `http://localhost:8080/api/bookings/${id}/complete`,
+                { method: "POST" , credentials: "include"}
+            );
 
-    await fetch(
-        `http://localhost:8080/api/bookings/${id}/complete`,
-        {
-            method: "POST"
+            if (!response.ok) {
+                throw new Error("Failed to complete booking");
+            }
+
+            setBookings(prev =>
+                prev.map(booking =>
+                    booking.id === id
+                        ? { ...booking, status: "Completed" }
+                        : booking
+                )
+            );
+        } catch (error) {
+            console.error(error);
+            alert("Захиалгын төлөв өөрчлөхөд алдаа гарлаа");
         }
-    );
-
-    setBookings((prev) => prev.map((booking) => booking.id === id
-                    ? {
-                        ...booking,
-                        status: "ДУУССАН"
-                    }
-                    : booking
-            )
-        );
     };
+
 
     const handleAssign = async (
         id,
@@ -38,6 +45,7 @@ function AdminBookings() {
         await fetch(
             `http://localhost:8080/api/bookings/${id}/assign?mechanic=${mechanic}`,
             {
+                credentials: "include",
                 method: "PUT"
             }
         );
@@ -66,6 +74,33 @@ function AdminBookings() {
             .then((data) => setMechanics(data));
 
     }, []);
+
+
+
+    const handleStart = async (id) => {
+        try {
+            const response = await fetch(
+                `http://localhost:8080/api/bookings/${id}/start`,
+                { method: "PUT", credentials: "include" }
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to start repair");
+            }
+
+            setBookings(prev =>
+                prev.map(booking =>
+                    booking.id === id
+                        ? { ...booking, status: "In Progress" }
+                        : booking
+                )
+            );
+        } catch (error) {
+            console.error(error);
+            alert("Засвар эхлүүлэхэд алдаа гарлаа");
+        }
+    };
+
 
     return (
 
@@ -138,70 +173,61 @@ function AdminBookings() {
                                 {booking.serviceName}
                             </td>
 
+                           
                             <td>
+                                <select
+                                    value={booking.mechanic || ""}
+                                    disabled={
+                                        booking.status === "Completed" ||
+                                        booking.status === "Cancelled"
+                                    }
+                                    onChange={(e) =>
+                                        handleAssign(booking.id, e.target.value)
+                                    }
+                                >
+                                    <option value="">Засварчин сонгох</option>
 
-                                {booking.mechanic ? (
-
-                                    <span>
-                                        {booking.mechanic}
-                                    </span>
-
-                                ) : (
-
-                                    <select
-                                        onChange={(e) =>
-                                            handleAssign(
-                                                booking.id,
-                                                e.target.value
-                                            )
-                                        }
-                                    >
-
-                                        <option value="">
-                                            Засварчин сонгох
+                                    {mechanics.map((mechanic) => (
+                                        <option key={mechanic.id} value={mechanic.name}>
+                                            {mechanic.name}
                                         </option>
-
-                                        {mechanics.map((mechanic) => (
-
-                                            <option
-                                                key={mechanic.id}
-                                                value={mechanic.name}
-                                            >
-                                                {mechanic.name}
-                                            </option>
-
-                                        ))}
-
-                                    </select>
-
-                                )}
-
+                                    ))}
+                                </select>
                             </td>
+
                             
                             <td>
                                 {booking.bookingDate}
                             </td>
                             
                             <td>
-                                <span className={booking.status.toLowerCase()}>
-                                    {booking.status}
+                                <span className={(booking.status || "").toLowerCase().replace(/\s+/g, "-")}>
                                 </span>
                                 
                             </td>
                             
-                            
-                            
+                           
                             <td>
-
-                                {booking.status === "Pending" && (
-
-                                    <button onClick={() =>handleComplete(booking.id)}>  
-                                        Дуусгах
+                                {booking.status === "Assigned" && (
+                                    <button onClick={() => handleStart(booking.id)}>
+                                        Эхлүүлэх
                                     </button>
-
                                 )}
 
+                                {booking.status === "In Progress" && (
+                                    <button onClick={() => handleComplete(booking.id)}>
+                                        Дуусгах
+                                    </button>
+                                )}
+
+                                {booking.status === "Completed" && (
+                                    <span style={{ color: "#15803d", fontWeight: 600 }}>
+                                        Дууссан
+                                    </span>
+                                )}
                             </td>
+
+
 
                         </tr>
 

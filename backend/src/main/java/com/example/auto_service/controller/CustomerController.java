@@ -10,6 +10,18 @@ import com.example.auto_service.repository.CustomerRepository;
 import com.example.auto_service.service.EmailService;
 
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.SecurityContextRepository;
+
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,19 +31,21 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/customers")
-@CrossOrigin(origins = "*")
+
 public class CustomerController {
 
     private final CustomerRepository repository;
     private final EmailService emailService;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final SecurityContextRepository contextRepository;
 
     public CustomerController(CustomerRepository repository,
-         EmailService emailService, BCryptPasswordEncoder passwordEncoder) 
+         EmailService emailService, BCryptPasswordEncoder passwordEncoder,SecurityContextRepository contextRepository) 
         {
         this.repository = repository;
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
+        this.contextRepository = contextRepository;
         }
 
     @GetMapping
@@ -83,19 +97,9 @@ public class CustomerController {
             EmailDetails email = new EmailDetails();
 
             email.setRecipient(savedCustomer.getEmail());
-
             email.setSubject("Auto Service Verification");
-
             email.setMsgBody("Your verification code is: " + code);
-
             emailService.sendSimpleMail(email);
-
-            LoginResponse response = new LoginResponse(
-                customer.getId(),
-                customer.getName(),
-                customer.getEmail(),
-                customer.isVerified()
-        );
 
             return ResponseEntity.ok(savedCustomer);
         }
@@ -144,72 +148,110 @@ public class CustomerController {
         }
 
         
+    
+    
     @PostMapping("/login")
-    public ResponseEntity<Customer> login(
-            @RequestBody LoginRequest request){
+    public ResponseEntity<?> login(
+            @RequestBody LoginRequest request,
+            HttpServletRequest httpRequest,
+            HttpServletResponse httpResponse
+    ) {
+        if (request.getPhone() == null ||
+            request.getPassword() == null) {
+            return ResponseEntity.badRequest()
+                    .body("Phone and password are required");
+        }
 
-        Customer customer =
-            repository.findByPhone(request.getPhone())
-                    .orElse(null);
+        Customer customer = repository.findByPhone(request.getPhone())
+                .orElse(null);
 
-        if(customer != null &&
-            passwordEncoder.matches(request.getPassword(), customer.getPassword())
-        ) {
+        if (customer == null ||
+            customer.getPassword() == null ||
+            !passwordEncoder.matches(
+                    request.getPassword(),
+                    customer.getPassword()
+            )) {
+            return ResponseEntity.status(401)
+                    .body("Invalid phone or password");
+        }
 
-            if(!customer.isVerified()) {
+        if (!customer.isVerified()) {
+            return ResponseEntity.status(403)
+                    .body("Please verify your email");
+        }
 
-                return ResponseEntity
-                        .status(403)
-                        .build();
-            }
+        Authentication authentication =
+                new UsernamePasswordAuthenticationToken(
+                        customer.getPhone(),
+                        null,
+                        List.of(new SimpleGrantedAuthority("ROLE_CUSTOMER"))
+                );
 
-            LoginResponse response = new LoginResponse(
-                customer.getId(),
-                customer.getName(),
-                customer.getEmail(),
-                customer.isVerified()
+        SecurityContext context =
+                SecurityContextHolder.createEmptyContext();
+
+        context.setAuthentication(authentication);
+        SecurityContextHolder.setContext(context);
+
+        httpRequest.getSession(true);
+        httpRequest.changeSessionId();
+
+        contextRepository.saveContext(
+                context, httpRequest, httpResponse
         );
 
-            return ResponseEntity.ok(customer);
-        }
-
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(customer);
     }
 
+
+
     @PostMapping("/resend-code")
-    public ResponseEntity<String> resendCode(
-            @RequestBody VerifyRequest request
+        public ResponseEntity<String> resendCode(
+                @RequestBody VerifyRequest request
+        ) {
+
+            Customer customer =
+                    repository.findByEmail(
+                            request.getEmail()
+                    ).orElse(null);
+
+            if (customer == null) {
+                return ResponseEntity
+                        .badRequest()
+                        .body("Customer not found");
+            }
+
+        String code = String.valueOf(
+                        (int)(100000 + Math.random() * 900000)
+                );
+
+        customer.setVerifCode(code);
+
+        repository.save(customer);
+
+        EmailDetails email = new EmailDetails();
+
+        email.setRecipient(customer.getEmail());
+        email.setSubject("Auto Service Verification");
+        email.setMsgBody("Your new verification code is: " + code);
+        emailService.sendSimpleMail(email);
+
+        return ResponseEntity.ok(
+                "Verification code sent"
+        );
+    }
+
+
+    @GetMapping("/me")
+    public ResponseEntity<?> currentCustomer(
+            Authentication authentication
     ) {
+        String phone = authentication.getName();
 
-        Customer customer =
-                repository.findByEmail(
-                        request.getEmail()
-                ).orElse(null);
+        return repository.findByPhone(phone)
+                .<ResponseEntity<?>>map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
-        if (customer == null) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Customer not found");
-        }
-
-    String code = String.valueOf(
-                    (int)(100000 + Math.random() * 900000)
-            );
-
-    customer.setVerifCode(code);
-
-    repository.save(customer);
-
-    EmailDetails email = new EmailDetails();
-
-    email.setRecipient(customer.getEmail());
-    email.setSubject("Auto Service Verification");
-    email.setMsgBody("Your new verification code is: " + code);
-    emailService.sendSimpleMail(email);
-
-    return ResponseEntity.ok(
-            "Verification code sent"
-    );
-}
     
 }

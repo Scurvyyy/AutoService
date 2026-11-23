@@ -1,65 +1,165 @@
-﻿.admin-bookings {
+﻿
+.admin-bookings {
     max-width: 1400px;
-    margin: 40px auto;
-    padding: 20px;
+    margin: 0px auto;
+    padding: 25px;
 }
 
-table {
+.admin-bookings h1 {
+    font-size: 30px;
+    color: #111827;
+    margin-bottom: 25px;
+}
+
+/* Search */
+
+.admin-bookings .search-btn {
+    width: 280px;
+    padding: 12px 15px;
+    margin-bottom: 25px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: white;
+    font-size: 14px;
+    outline: none;
+}
+
+.admin-bookings .search-btn:focus {
+    border-color: #dc2626;
+}
+
+/* Table */
+
+.admin-bookings table {
     width: 100%;
     border-collapse: collapse;
     background: white;
     border-radius: 12px;
     overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
-th,
-td {
-    padding: 15px;
+.admin-bookings th,
+.admin-bookings td {
+    padding: 17px 18px;
     border-bottom: 1px solid #e5e7eb;
     text-align: left;
+    font-size: 14px;
 }
 
-th {
-    background: #2563eb;
+.admin-bookings th {
+    background: #dc2626;
     color: white;
+    font-weight: 600;
 }
 
-button {
+.admin-bookings tbody tr:hover {
+    background: #fff7f7;
+}
 
-    background: #10b981;
+.admin-bookings tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Mechanic Dropdown */
+
+.admin-bookings select {
+    padding: 9px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.admin-bookings select:focus {
+    outline: none;
+    border-color: #dc2626;
+}
+
+/* Status */
+
+.admin-bookings .pending,
+.admin-bookings .assigned,
+.admin-bookings .completed,
+.admin-bookings .cancelled,
+.admin-bookings .in-progress {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.admin-bookings .pending {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.admin-bookings .assigned {
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+.admin-bookings .in-progress {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.admin-bookings .completed {
+    background: #f0fdf4;
+    color: #15803d;
+}
+
+.admin-bookings .cancelled {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+/* Buttons */
+
+.admin-bookings button {
+    padding: 10px 16px;
+    background: #dc2626;
     color: white;
     border: none;
-    padding: 8px 15px;
     border-radius: 8px;
     cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s;
 }
 
-.pending {
-    color: orange;
-    font-weight: bold;
+.admin-bookings button:hover {
+    background: #b91c1c;
 }
 
-.completed {
-    color: green;
-    font-weight: bold;
+.admin-bookings .getback {
+
+    margin-bottom: 20px;
+    background: #374151;
 }
 
-.cancelled {
-    color: red;
-    font-weight: bold;
+.admin-bookings .getback:hover {
+    background: #1f2937;
 }
 
-.assigned {
-    color: blue;
-    font-weight: bold;
+.admin-bookings .manage-repair-btn {
+    margin-left: 8px;
 }
 
-.getback {
-    padding: 10px;
 
-}
+@media (max-width: 900px) {
+    .admin-bookings {
+        padding: 15px;
+    }
 
-.search-btn {
-    margin-top: 5px;
-    margin-bottom: 10px;
+    .admin-bookings table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .admin-bookings .search-btn {
+        max-width: 100%;
+    }
 }

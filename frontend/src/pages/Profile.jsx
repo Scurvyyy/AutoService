@@ -12,16 +12,23 @@ function Profile() {
     }
 
     const customer = JSON.parse(
-        localStorage.getItem("customer")
-    );
+        localStorage.getItem("customer") || "null"
+    ) || {};
 
     useEffect(() => {
+        if (!customer.phone) return;
 
         fetch(
-            `http://localhost:8080/api/bookings/phone/${customer.phone}`
+            `http://localhost:8080/api/bookings/phone/${encodeURIComponent(customer.phone)}`
         )
-            .then((response) => response.json())
-            .then((data) => setBookings(data));
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to fetch bookings");
+                }
+                return response.json();
+            })
+            .then(data => setBookings(Array.isArray(data) ? data : []))
+            .catch(error => console.error(error));
 
     }, [customer.phone]);
 
@@ -68,13 +75,13 @@ const handleCancel = async (id) => {
            <div className="profile-header">
 
                 <div className="profile-avatar">
-                    {customer.name.charAt(0)}
+                    {(customer?.name || customer?.customerName || "?").charAt(0).toUpperCase()}
                 </div>
 
                 <div>
 
                     <h1>
-                        Сайн байна уу, {customer.name}
+                        Сайн байна уу, {customer?.name || customer?.customerName || "Хэрэглэгч"}
                     </h1>
 
                     <p>
@@ -96,7 +103,7 @@ const handleCancel = async (id) => {
                 </h2>
 
                 <p>
-                    <b>Нэр:</b> {customer.name}
+                    <b>Нэр:</b> {customer?.name || customer?.customerName || "Мэдээлэл байхгүй"}
                 </p>
 
                 <p>
@@ -177,9 +184,7 @@ const handleCancel = async (id) => {
                         )}
 
                         <p
-                            className={
-                                booking.status.toLowerCase()
-                            }
+                            className={(booking.status || "").toLowerCase().replace(/\s+/g, "-")}
                         >
                             Төлөв:
                             {booking.status}

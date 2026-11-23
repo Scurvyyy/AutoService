@@ -62,6 +62,27 @@ function Admin() {
 
     }, []);
     
+        const handleLogout = async () => {
+        try {
+            const response = await fetch(
+                "http://localhost:8080/api/admin/logout",
+                {
+                    method: "POST",
+                    credentials: "include"
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Logout failed");
+            }
+
+            sessionStorage.removeItem("admin");
+            navigate("/adminLogin", { replace: true });
+        } catch (error) {
+            console.error(error);
+            alert("Гарахад алдаа гарлаа");
+        }
+    };
 
     return (
 
@@ -73,9 +94,6 @@ function Admin() {
                 <h1>
                     Admin Dashboard
                 </h1>
-
-               
-                
 
                 <div className="admin-grid">
 
@@ -115,7 +133,11 @@ function Admin() {
                         <h2>Reports & Analytics</h2>
                         <p>Тайлан, статистик харах</p>
                     </div>
+                   
                 </div>
+                 <button className="logout-btn" onClick={handleLogout}>
+                        Гарах
+                    </button>
 
             </div>
 

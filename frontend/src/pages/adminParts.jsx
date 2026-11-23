@@ -46,6 +46,7 @@ function AdminParts() {
                     "http://localhost:8080/api/parts/upload",
                     {
                         method: "POST",
+                        credentials: "include",
                         body: formData
                     }
                 );
@@ -63,6 +64,7 @@ function AdminParts() {
                     : "http://localhost:8080/api/parts",
                 {
                     method: editingId ? "PUT" : "POST",
+                    credentials: "include",
                     headers: {
                         "Content-Type": "application/json"
                     },
@@ -111,7 +113,7 @@ function AdminParts() {
 
         const response = await fetch(
             `http://localhost:8080/api/parts/${id}`,
-            { method: "DELETE" }
+            { method: "DELETE",credentials: "include" }
         );
 
         if (!response.ok) {
@@ -154,6 +156,7 @@ function AdminParts() {
         try {
             const response = await fetch("http://localhost:8080/api/part-sales", {
                 method: "POST",
+                credentials: "include",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     partId: part.id,

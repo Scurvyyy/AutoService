@@ -2,7 +2,12 @@ package com.example.auto_service.controller;
 
 import com.example.auto_service.entity.Booking;
 import com.example.auto_service.repository.BookingRepository;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+
 
 import java.util.List;
 
@@ -76,6 +81,37 @@ public class BookingController {
 
         return repository.save(booking);
     }
+
+
+    @GetMapping("/{id}")
+    public Booking getBookingById(@PathVariable Long id) {
+        return repository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "Booking not found"
+            ));
+    }
+
+    @PutMapping("/{id}/start")
+    public Booking startRepair(@PathVariable Long id) {
+        Booking booking = repository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "Booking not found"
+            ));
+
+        if (!"Assigned".equals(booking.getStatus())) {
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "Only assigned bookings can start repairs"
+            );
+        }
+
+        booking.setStatus("In Progress");
+
+        return repository.save(booking);
+    }
+
 
    
 }

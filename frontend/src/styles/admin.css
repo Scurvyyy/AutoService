@@ -49,10 +49,24 @@
     margin: 0 0 12px;
 }
 
-.admin-grid .admin-card p {
+.dashboard-container > .logout-btn {
+    display: block;
+    width: fit-content;
+    height: auto;
+    margin: 30px 0 20px auto;
+    padding: 12px 28px;
+    background: #dc2626;
+    color: white;
+    border: none;
+    border-radius: 8px;
     font-size: 14px;
-    color: #6b7280;
-    margin: 0;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.dashboard-container > .logout-btn:hover {
+    background: #b91c1c;
 }
 
 @media (max-width: 1000px) {

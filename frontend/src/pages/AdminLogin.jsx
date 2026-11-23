@@ -14,47 +14,43 @@ function AdminLogin() {
     username.trim() !== "" &&
     password.trim() != "" ;
 
-    const handleLogin = async () => {
-
-        if(!isFormValid) {
-
-            alert("Бүх талбарыг зөв бөглөнө үү")
-
-            return;
-        }
-
-        const response = await fetch(
-            "http://localhost:8080/api/admin/login",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    username: username,
-                    password: password
-                })
+    
+        const handleLogin = async () => {
+            if (!isFormValid) {
+                alert("Бүх талбарыг зөв бөглөнө үү");
+                return;
             }
-        );
 
+            try {
+                const response = await fetch(
+                    "http://localhost:8080/api/admin/login",
+                    {
+                        method: "POST",
+                        credentials: "include",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            username,
+                            password
+                        })
+                    }
+                );
 
-        const text = await response.text();
+                if (!response.ok) {
+                    alert("Нэвтрэх нэр эсвэл нууц үг буруу байна");
+                    return;
+                }
 
-            console.log("Response:", text);
+                // Authentication is stored in a server-side session.
+                navigate("/admin", { replace: true });
 
-            if (!response.ok) {
+            } catch (error) {
+                console.error(error);
+                alert("Сервертэй холбогдоход алдаа гарлаа");
+            }
+        };
 
-            alert("Админ нэвтрэх нэр эсвэл нууц үг буруу байна");
-
-            return;
-        }
-
-            const data = JSON.parse(text);
-            sessionStorage.setItem("admin", JSON.stringify(data));
-            navigate("/admin", { replace: true });
-            console.log("Login success");
-        
-    };
 
 
 
